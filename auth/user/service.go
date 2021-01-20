@@ -8,7 +8,7 @@ type Service interface {
 
 type service struct{}
 
-func NewService() Service {
+func NewService() *service {
 	return &service{}
 }
 func (s *service) ValidateUser(email, password string) error {
