@@ -15,7 +15,7 @@ type logmw struct {
 	Service
 }
 
-func (mw logmw) ValidateUser(email, password string) (err error) {
+func (mw logmw) ValidateUser(email, password string) (token string, err error) {
 	defer func(begin time.Time) {
 		_ = mw.logger.Log(
 			"method", "validateUser",
@@ -25,6 +25,20 @@ func (mw logmw) ValidateUser(email, password string) (err error) {
 		)
 	}(time.Now())
 
-	err = mw.Service.ValidateUser(email, password)
+	token, err = mw.Service.ValidateUser(email, password)
+	return
+}
+
+func (mw logmw) ValidateToken(token string) (email string, err error) {
+	defer func(begin time.Time) {
+		_ = mw.logger.Log(
+			"method", "validateToken",
+			"input", token,
+			"err", err,
+			"took", time.Since(begin),
+		)
+	}(time.Now())
+
+	email, err = mw.Service.ValidateToken(token)
 	return
 }
