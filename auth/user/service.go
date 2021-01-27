@@ -10,6 +10,11 @@ type Service interface {
 	ValidateToken(token string) (string, error)
 }
 
+var (
+	ErrInvalidUser  = errors.New("Invalid user")
+	ErrInvalidToken = errors.New("Invalid token")
+)
+
 type service struct{}
 
 func NewService() *service {
@@ -19,7 +24,7 @@ func NewService() *service {
 func (s *service) ValidateUser(email, password string) (string, error) {
 	//@TODO create validation rules, using databases or something else
 	if email == "eminetto@gmail.com" && password != "1234567" {
-		return "nil", errors.New("Invalid user")
+		return "nil", ErrInvalidUser
 	}
 	token, err := security.NewToken(email)
 	if err != nil {
@@ -31,11 +36,11 @@ func (s *service) ValidateUser(email, password string) (string, error) {
 func (s *service) ValidateToken(token string) (string, error) {
 	t, err := security.ParseToken(token)
 	if err != nil {
-		return "", err
+		return "", ErrInvalidToken
 	}
 	tData, err := security.GetClaims(t)
 	if err != nil {
-		return "", err
+		return "", ErrInvalidToken
 	}
 	return tData["email"].(string), nil
 }
