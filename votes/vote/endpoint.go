@@ -35,7 +35,7 @@ func makeStoreEndpoint(svc Service) endpoint.Endpoint {
 			TalkName: req.TalkName,
 			Score:    req.Score,
 		}
-		_, err := svc.Store(v)
+		_, err := svc.Store(ctx, v)
 		if err != nil {
 			return storeResponse{"", err.Error()}, err
 		}

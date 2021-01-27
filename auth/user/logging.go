@@ -1,6 +1,7 @@
 package user
 
 import (
+	"context"
 	"time"
 
 	"github.com/go-kit/kit/log"
@@ -15,7 +16,7 @@ type logmw struct {
 	Service
 }
 
-func (mw logmw) ValidateUser(email, password string) (token string, err error) {
+func (mw logmw) ValidateUser(ctx context.Context, email, password string) (token string, err error) {
 	defer func(begin time.Time) {
 		_ = mw.logger.Log(
 			"method", "validateUser",
@@ -25,11 +26,11 @@ func (mw logmw) ValidateUser(email, password string) (token string, err error) {
 		)
 	}(time.Now())
 
-	token, err = mw.Service.ValidateUser(email, password)
+	token, err = mw.Service.ValidateUser(ctx, email, password)
 	return
 }
 
-func (mw logmw) ValidateToken(token string) (email string, err error) {
+func (mw logmw) ValidateToken(ctx context.Context, token string) (email string, err error) {
 	defer func(begin time.Time) {
 		_ = mw.logger.Log(
 			"method", "validateToken",
@@ -39,6 +40,6 @@ func (mw logmw) ValidateToken(token string) (email string, err error) {
 		)
 	}(time.Now())
 
-	email, err = mw.Service.ValidateToken(token)
+	email, err = mw.Service.ValidateToken(ctx, token)
 	return
 }

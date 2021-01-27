@@ -37,7 +37,7 @@ func makeStoreEndpoint(svc Service) endpoint.Endpoint {
 			Body:  req.Body,
 		}
 		fmt.Println(f)
-		_, err := svc.Store(f)
+		_, err := svc.Store(ctx, f)
 		if err != nil {
 			return storeResponse{"", err.Error()}, err
 		}

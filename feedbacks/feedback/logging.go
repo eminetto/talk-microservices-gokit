@@ -1,6 +1,7 @@
 package feedback
 
 import (
+	"context"
 	"time"
 
 	"github.com/go-kit/kit/log"
@@ -16,7 +17,7 @@ type logmw struct {
 	Service
 }
 
-func (mw logmw) Store(f Feedback) (id uuid.UUID, err error) {
+func (mw logmw) Store(ctx context.Context, f Feedback) (id uuid.UUID, err error) {
 	defer func(begin time.Time) {
 		_ = mw.logger.Log(
 			"method", "store",
@@ -27,6 +28,6 @@ func (mw logmw) Store(f Feedback) (id uuid.UUID, err error) {
 		)
 	}(time.Now())
 
-	id, err = mw.Service.Store(f)
+	id, err = mw.Service.Store(ctx, f)
 	return
 }
