@@ -2,9 +2,6 @@ package user
 
 import (
 	"context"
-	"encoding/json"
-
-	"net/http"
 
 	"github.com/go-kit/kit/endpoint"
 )
@@ -28,14 +25,6 @@ func makeValidateUserEndpoint(svc Service) endpoint.Endpoint {
 		}
 		return validateUserResponse{token, ""}, err
 	}
-}
-
-func decodeValidateUserRequest(ctx context.Context, r *http.Request) (interface{}, error) {
-	var request validateUserRequest
-	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
-		return nil, err
-	}
-	return request, nil
 }
 
 type validateTokenRequest struct {

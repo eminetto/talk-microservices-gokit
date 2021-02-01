@@ -58,6 +58,14 @@ func codeFrom(err error) int {
 	}
 }
 
+func decodeValidateUserRequest(ctx context.Context, r *http.Request) (interface{}, error) {
+	var request validateUserRequest
+	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
+		return nil, err
+	}
+	return request, nil
+}
+
 func decodeValidateTokenRequest(ctx context.Context, r *http.Request) (interface{}, error) {
 	var request validateTokenRequest
 	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {

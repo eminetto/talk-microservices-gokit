@@ -7,7 +7,7 @@ import (
 )
 
 type Service interface {
-	ValidateUser(ectx context.Context, mail, password string) (string, error)
+	ValidateUser(ctx context.Context, mail, password string) (string, error)
 	ValidateToken(ctx context.Context, token string) (string, error)
 }
 
