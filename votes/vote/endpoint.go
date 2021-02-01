@@ -2,9 +2,6 @@ package vote
 
 import (
 	"context"
-	"encoding/json"
-
-	"net/http"
 
 	"github.com/go-kit/kit/endpoint"
 	"github.com/google/uuid"
@@ -37,18 +34,4 @@ func makeStoreEndpoint(svc Service) endpoint.Endpoint {
 
 		return storeResponse{v.ID.String(), ""}, err
 	}
-}
-
-func decodeStoreRequest(ctx context.Context, r *http.Request) (interface{}, error) {
-	var request storeRequest
-	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
-		return nil, err
-	}
-
-	request.Email = r.Header.Get("email")
-	return request, nil
-}
-
-func encodeResponse(ctx context.Context, w http.ResponseWriter, response interface{}) error {
-	return json.NewEncoder(w).Encode(response)
 }

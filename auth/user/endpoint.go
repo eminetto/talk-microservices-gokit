@@ -57,15 +57,3 @@ func makeValidateTokenEndpoint(svc Service) endpoint.Endpoint {
 		return validateTokenResponse{email, ""}, err
 	}
 }
-
-func decodeValidateTokenRequest(ctx context.Context, r *http.Request) (interface{}, error) {
-	var request validateTokenRequest
-	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
-		return nil, err
-	}
-	return request, nil
-}
-
-func encodeResponse(ctx context.Context, w http.ResponseWriter, response interface{}) error {
-	return json.NewEncoder(w).Encode(response)
-}
