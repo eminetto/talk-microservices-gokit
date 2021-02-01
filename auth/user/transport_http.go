@@ -10,7 +10,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func NewHttpServer(svc Service, logger log.Logger) {
+func NewHttpServer(svc Service, logger log.Logger) *mux.Router {
 	options := []httptransport.ServerOption{
 		httptransport.ServerErrorLogger(logger),
 		httptransport.ServerErrorEncoder(encodeErrorResponse),
@@ -31,9 +31,7 @@ func NewHttpServer(svc Service, logger log.Logger) {
 	r := mux.NewRouter()
 	r.Methods("POST").Path("/v1/auth").Handler(validateUserHandler)
 	r.Methods("POST").Path("/v1/validate-token").Handler(validateTokenHandler)
-
-	logger.Log("msg", "HTTP", "addr", "8081")
-	logger.Log("err", http.ListenAndServe(":8081", r))
+	return r
 }
 
 func encodeErrorResponse(_ context.Context, err error, w http.ResponseWriter) {

@@ -11,7 +11,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func NewHttpServer(svc Service, logger log.Logger) {
+func NewHttpServer(svc Service, logger log.Logger) *mux.Router {
 	options := []httptransport.ServerOption{
 		httptransport.ServerErrorLogger(logger),
 	}
@@ -24,8 +24,8 @@ func NewHttpServer(svc Service, logger log.Logger) {
 	r := mux.NewRouter()
 	r.Use(middleware.IsAuthenticatedMiddleware)
 	r.Methods("POST").Path("/v1/feedback").Handler(storeHandler)
-	logger.Log("msg", "HTTP", "addr", "8082")
-	logger.Log("err", http.ListenAndServe(":8082", r))
+
+	return r
 }
 
 func decodeStoreRequest(ctx context.Context, r *http.Request) (interface{}, error) {

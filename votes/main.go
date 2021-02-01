@@ -1,6 +1,7 @@
 package main
 
 import (
+	"net/http"
 	"os"
 
 	"votes/vote"
@@ -15,5 +16,7 @@ func main() {
 	logger = log.With(logger, "listen", "8083", "caller", log.DefaultCaller)
 
 	svc := vote.NewLoggingMiddleware(logger, vote.NewService())
-	vote.NewHttpServer(svc, logger)
+	r := vote.NewHttpServer(svc, logger)
+	logger.Log("msg", "HTTP", "addr", "8083")
+	logger.Log("err", http.ListenAndServe(":8083", r))
 }
