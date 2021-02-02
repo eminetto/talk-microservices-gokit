@@ -13,7 +13,7 @@
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
-
+.idea/
 auth/bin
 votes/bin
 feedbacks/bin
