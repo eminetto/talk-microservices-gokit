@@ -4,7 +4,10 @@ FORCE: ;
 
 .PHONY: build
 
-build: build-auth build-feedback build-vote
+build: build-grpc build-auth build-feedback build-vote
+
+build-grpc:
+	cd auth/pb; protoc auth.proto --go-grpc_out=:.
 
 build-auth:
 	cd auth; go build -o bin/auth main.go

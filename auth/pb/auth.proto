@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+//package pb;
+//option go_package = "pb";
+option go_package = ".;pb";
+service Auth {
+    rpc ValidateToken (ValidateTokenRequest) returns (ValidateTokenResponse) {}
+}
+
+message ValidateTokenRequest {
+    string token = 1;
+}
+
+message ValidateTokenResponse {
+    string email = 1;
+}
