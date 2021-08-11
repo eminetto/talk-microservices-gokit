@@ -46,6 +46,8 @@ github.com/eapache/queue v1.1.0/go.mod h1:6eCeP0CKFpHLu8blIFXhExK/dRa7WDZfr6jVFP
 github.com/edsrzf/mmap-go v1.0.0/go.mod h1:YO35OhQPt3KJa3ryjFM5Bs14WD66h8eGKpfaBNrHW5M=
 github.com/eminetto/talk-microservices-gokit v1.0.0 h1:At4h7CT2IOQJz5JALfiYkca9zzej6l58WJxVZCfEpzI=
 github.com/eminetto/talk-microservices-gokit v1.0.0/go.mod h1:bx8rD8ThDI0DSwk+v0mqzN0IFdDwS2e0o9AmMkw50w0=
+github.com/eminetto/talk-microservices-gokit v1.0.5 h1:E+EqeXBQZScp4BYDXymIlDRsBBh6o+0KNnilsBQYCqU=
+github.com/eminetto/talk-microservices-gokit v1.0.5/go.mod h1:hwHmvkEKX8tpqcPrwJDtanX3TwEEhtfl35zFLbHBdQA=
 github.com/envoyproxy/go-control-plane v0.6.9/go.mod h1:SBwIajubJHhxtWwsL9s8ss4safvEdbitLhGGK48rN6g=
 github.com/envoyproxy/go-control-plane v0.9.1-0.20191026205805-5f8ba28d4473/go.mod h1:YTl/9mNaCwkRvm6d1a2C3ymFceY/DCBVvsKhRF0iEA4=
 github.com/envoyproxy/protoc-gen-validate v0.1.0/go.mod h1:iSmxcyjqTsJpI2R4NaDN7+kN2VEUnK/pcBlmesArF7c=
