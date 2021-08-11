@@ -5,24 +5,26 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/go-kit/kit/log"
-	httptransport "github.com/go-kit/kit/transport/http"
+	kitlog "github.com/go-kit/kit/log"
+	"github.com/go-kit/kit/transport"
+	kithttp "github.com/go-kit/kit/transport/http"
 	"github.com/gorilla/mux"
 )
 
-func NewHttpServer(svc Service, logger log.Logger) *mux.Router {
-	options := []httptransport.ServerOption{
-		httptransport.ServerErrorLogger(logger),
-		httptransport.ServerErrorEncoder(encodeErrorResponse),
+func NewHttpServer(svc Service, logger kitlog.Logger) *mux.Router {
+	options := []kithttp.ServerOption{
+		kithttp.ServerErrorHandler(transport.NewLogErrorHandler(logger)),
+		kithttp.ServerErrorEncoder(encodeErrorResponse),
+		kithttp.ServerFinalizer(newServerFinalizer(logger)),
 	}
-	validateUserHandler := httptransport.NewServer(
+	validateUserHandler := kithttp.NewServer(
 		makeValidateUserEndpoint(svc),
 		decodeValidateUserRequest,
 		encodeResponse,
 		options...,
 	)
 
-	validateTokenHandler := httptransport.NewServer(
+	validateTokenHandler := kithttp.NewServer(
 		makeValidateTokenEndpoint(svc),
 		decodeValidateTokenRequest,
 		encodeResponse,
@@ -32,6 +34,12 @@ func NewHttpServer(svc Service, logger log.Logger) *mux.Router {
 	r.Methods("POST").Path("/v1/auth").Handler(validateUserHandler)
 	r.Methods("POST").Path("/v1/validate-token").Handler(validateTokenHandler)
 	return r
+}
+
+func newServerFinalizer(logger kitlog.Logger) kithttp.ServerFinalizerFunc {
+	return func(ctx context.Context, code int, r *http.Request) {
+		logger.Log("status",code, "path", r.RequestURI, "method", r.Method)
+	}
 }
 
 func encodeErrorResponse(_ context.Context, err error, w http.ResponseWriter) {
