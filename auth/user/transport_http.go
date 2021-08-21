@@ -3,7 +3,6 @@ package user
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	kitlog "github.com/go-kit/kit/log"
@@ -39,14 +38,11 @@ func NewHttpServer(svc Service, logger kitlog.Logger) *mux.Router {
 
 func newServerFinalizer(logger kitlog.Logger) kithttp.ServerFinalizerFunc {
 	return func(ctx context.Context, code int, r *http.Request) {
-		logger.Log("status",code, "path", r.RequestURI, "method", r.Method)
+		logger.Log("status", code, "path", r.RequestURI, "method", r.Method)
 	}
 }
 
 func encodeErrorResponse(_ context.Context, err error, w http.ResponseWriter) {
-	fmt.Println("aqui porra")
-	fmt.Println(err)
-	fmt.Println(codeFrom(err))
 	if err == nil {
 		panic("encodeError with nil error")
 	}

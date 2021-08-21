@@ -48,6 +48,8 @@ github.com/eminetto/talk-microservices-gokit v1.0.5 h1:E+EqeXBQZScp4BYDXymIlDRsB
 github.com/eminetto/talk-microservices-gokit v1.0.5/go.mod h1:hwHmvkEKX8tpqcPrwJDtanX3TwEEhtfl35zFLbHBdQA=
 github.com/eminetto/talk-microservices-gokit v1.0.6 h1:7gVtxevAYZ42r5V/qmA6/gXJGXSo0juSsBQi8CypOBg=
 github.com/eminetto/talk-microservices-gokit v1.0.6/go.mod h1:hwHmvkEKX8tpqcPrwJDtanX3TwEEhtfl35zFLbHBdQA=
+github.com/eminetto/talk-microservices-gokit v1.0.7 h1:p76wMSEZ9H3+DUk24qtWzEyDgeWdWZNcNEHklpCRrlc=
+github.com/eminetto/talk-microservices-gokit v1.0.7/go.mod h1:hwHmvkEKX8tpqcPrwJDtanX3TwEEhtfl35zFLbHBdQA=
 github.com/envoyproxy/go-control-plane v0.6.9/go.mod h1:SBwIajubJHhxtWwsL9s8ss4safvEdbitLhGGK48rN6g=
 github.com/envoyproxy/go-control-plane v0.9.1-0.20191026205805-5f8ba28d4473/go.mod h1:YTl/9mNaCwkRvm6d1a2C3ymFceY/DCBVvsKhRF0iEA4=
 github.com/envoyproxy/protoc-gen-validate v0.1.0/go.mod h1:iSmxcyjqTsJpI2R4NaDN7+kN2VEUnK/pcBlmesArF7c=
