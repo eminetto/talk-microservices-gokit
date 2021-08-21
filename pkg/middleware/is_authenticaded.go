@@ -13,7 +13,7 @@ func IsAuthenticatedMiddleware(next http.Handler) http.Handler {
 		errorMessage := "Authentication error"
 		tokenString := r.Header.Get("Authorization")
 		if tokenString == "" {
-			err := errors.New("Unauthorized")
+			err := errors.New("unauthorized")
 			respondWithError(rw, http.StatusUnauthorized, err.Error(), errorMessage)
 			return
 		}
@@ -32,7 +32,7 @@ func IsAuthenticatedMiddleware(next http.Handler) http.Handler {
 		}
 		var res result
 		err = json.NewDecoder(req.Body).Decode(&res)
-		if err != nil {
+		if err != nil || res.Email == ""{
 			respondWithError(rw, http.StatusUnauthorized, err.Error(), errorMessage)
 			return
 		}
