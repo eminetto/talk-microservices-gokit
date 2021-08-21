@@ -3,9 +3,9 @@ package vote
 import (
 	"context"
 	"encoding/json"
+	"github.com/eminetto/talk-microservices-gokit/pkg/middleware"
 	"net/http"
 
-	"github.com/eminetto/talk-microservices-gokit/pkg/middleware"
 	kitlog "github.com/go-kit/kit/log"
 	"github.com/go-kit/kit/transport"
 	kithttp "github.com/go-kit/kit/transport/http"

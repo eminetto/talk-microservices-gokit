@@ -3,6 +3,7 @@ package user
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	kitlog "github.com/go-kit/kit/log"
@@ -43,6 +44,9 @@ func newServerFinalizer(logger kitlog.Logger) kithttp.ServerFinalizerFunc {
 }
 
 func encodeErrorResponse(_ context.Context, err error, w http.ResponseWriter) {
+	fmt.Println("aqui porra")
+	fmt.Println(err)
+	fmt.Println(codeFrom(err))
 	if err == nil {
 		panic("encodeError with nil error")
 	}
