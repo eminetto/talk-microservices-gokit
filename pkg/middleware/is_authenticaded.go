@@ -8,22 +8,27 @@ import (
 	"strings"
 )
 
+var ErrUnauthorized = errors.New("unauthorized")
+
 func IsAuthenticatedMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
 		errorMessage := "Authentication error"
 		tokenString := r.Header.Get("Authorization")
 		if tokenString == "" {
-			err := errors.New("Unauthorized")
-			respondWithError(rw, http.StatusUnauthorized, err.Error(), errorMessage)
+			respondWithError(rw, http.StatusUnauthorized, ErrUnauthorized.Error(), errorMessage)
 			return
 		}
 		payload := `{
 			"token": "` + tokenString + `"
 		}`
-		//@TODO usar variável de ambiente
+		//@TODO use env var
 		req, err := http.Post("http://localhost:8081/v1/validate-token", "text/plain", strings.NewReader(payload))
 		if err != nil {
 			respondWithError(rw, http.StatusUnauthorized, err.Error(), errorMessage)
+			return
+		}
+		if req.StatusCode == http.StatusUnauthorized {
+			respondWithError(rw, http.StatusUnauthorized, ErrUnauthorized.Error(), errorMessage)
 			return
 		}
 		defer req.Body.Close()

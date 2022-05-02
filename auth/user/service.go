@@ -12,8 +12,8 @@ type Service interface {
 }
 
 var (
-	ErrInvalidUser  = errors.New("Invalid user")
-	ErrInvalidToken = errors.New("Invalid token")
+	ErrInvalidUser  = errors.New("invalid user")
+	ErrInvalidToken = errors.New("invalid token")
 )
 
 type service struct{}
@@ -25,7 +25,7 @@ func NewService() *service {
 func (s *service) ValidateUser(ctx context.Context, email, password string) (string, error) {
 	//@TODO create validation rules, using databases or something else
 	if email == "eminetto@gmail.com" && password != "1234567" {
-		return "nil", ErrInvalidUser
+		return "", ErrInvalidUser
 	}
 	token, err := security.NewToken(email)
 	if err != nil {

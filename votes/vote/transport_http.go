@@ -3,19 +3,21 @@ package vote
 import (
 	"context"
 	"encoding/json"
+	"github.com/eminetto/talk-microservices-gokit/pkg/middleware"
 	"net/http"
 
-	"github.com/eminetto/talk-microservices-gokit/pkg/middleware"
-	"github.com/go-kit/kit/log"
-	httptransport "github.com/go-kit/kit/transport/http"
+	kitlog "github.com/go-kit/kit/log"
+	"github.com/go-kit/kit/transport"
+	kithttp "github.com/go-kit/kit/transport/http"
 	"github.com/gorilla/mux"
 )
 
-func NewHttpServer(svc Service, logger log.Logger) *mux.Router {
-	options := []httptransport.ServerOption{
-		httptransport.ServerErrorLogger(logger),
+func NewHttpServer(svc Service, logger kitlog.Logger) *mux.Router {
+	options := []kithttp.ServerOption{
+		kithttp.ServerErrorHandler(transport.NewLogErrorHandler(logger)),
+		kithttp.ServerFinalizer(newServerFinalizer(logger)),
 	}
-	storeHandler := httptransport.NewServer(
+	storeHandler := kithttp.NewServer(
 		makeStoreEndpoint(svc),
 		decodeStoreRequest,
 		encodeResponse,
@@ -25,6 +27,12 @@ func NewHttpServer(svc Service, logger log.Logger) *mux.Router {
 	r.Use(middleware.IsAuthenticatedMiddleware)
 	r.Methods("POST").Path("/v1/vote").Handler(storeHandler)
 	return r
+}
+
+func newServerFinalizer(logger kitlog.Logger) kithttp.ServerFinalizerFunc {
+	return func(ctx context.Context, code int, r *http.Request) {
+		logger.Log("status",code, "path", r.RequestURI, "method", r.Method)
+	}
 }
 
 func decodeStoreRequest(ctx context.Context, r *http.Request) (interface{}, error) {
